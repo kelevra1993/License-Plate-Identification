@@ -31,31 +31,32 @@ num_hidden_units=200
 #Data file
 tfrecords_file="./data/train.tfrecords"
 #Number of iterations that we will run 
-num_iterations=100000
+num_iterations=10000
 
 #################
 #BATCH RETRIEVAL#
 #################
 
 #QUEUE CREATION
-filename_queue=tf.train.string_input_producer([tfrecords_file],num_epochs=None,shuffle=True)
+filename_queue=tf.train.string_input_producer([tfrecords_file],num_epochs=None)
 
 #WILL BE FURTHER REMOVED FROM THE FILE WHEN WE ARE DONE WITH THE PLACEHOLDERS
 #GETTING INPUT BATCHES
-train_data,label_data,length_data=fun.read_and_decode(filename_queue,input_batch_size)
+pre_train_data,pre_label_data,pre_length_data=fun.read_and_decode(filename_queue,input_batch_size)
 
 #DATA INPUT PLACEHOLDERS 
 #We are going to be using a time_major==False for the tf.nn.biirectional_dynamic_rnn, so we will initially be working with BatchxTimeStepsxfeatures
 #Feature value is equal to 150 (3 color channels) for our input data and 9 for our license plate label
   
-# input_images=tf.placeholder(tf.float32,shape=[None,input_feature_length,None],name='Train_input')
-input_images=train_data
-sparse_label=label_data
+input_images=tf.placeholder(tf.float32,shape=[None,None,input_feature_length],name='Train_input')
+
+train_length_data=tf.placeholder(tf.int32,shape=[None])
+sparse_indices=tf.placeholder(tf.int64)
+sparse_values=tf.placeholder(tf.int32)
+sparse_shape=tf.placeholder(tf.int64)
+sparse_label=tf.SparseTensor(sparse_indices,sparse_values,sparse_shape)
 dense_label=tf.sparse_tensor_to_dense(sparse_label)
-train_length_data=length_data
-# train_length_data=tf.placeholder(tf.int64,shape=[None])
-# train_length_data=tf.cast(train_length_data,dtype=tf.int32)
-# sparse_label=tf.sparse_placeholder(tf.int32)
+
 #########################################
 #Definition of weight matrix generators #
 #########################################
@@ -166,33 +167,54 @@ for i in range(num_iterations):
     
     #FIRST RUN OUR BATCH FETCHING METHOD FOR PREPROCESSING (CASTING, TURNING DENSE VECTORS INTO SPARSE VECTORS)
 
-	# input_batch_data, input_label_data, length_batch_data=sess.run([train_data,label_data,length_data])
+	input_batch_data, input_label_data, length_batch_data=sess.run([pre_train_data,pre_label_data,pre_length_data])
+	# print("\n"*10)
+	# print(input_batch_data.shape)
+	# print(input_label_data.shape)
+	# print(length_batch_data.shape)
+	sparse_parameters=fun._create_sparse_tensor(input_label_data[:,0,:])
     #FURTHER DOWN THE PIPELINE WE WILL DEFINE OUR VALIDATION EVALUATION DURING TRAINING 
 	#OPTIMIZATION STEP 
-	
-	len,_,loss,accuracy_beam,accuracy_greedy,decoded_beam,decoded_greedy,lab=sess.run([train_length_data,train_step,cost,acc_beam,acc,decoded_beam_dense,decoded_dense,dense_label],feed_dict={})
+	indices=sparse_parameters[0]
+	values=sparse_parameters[1]
+	dense_shape=sparse_parameters[2]
 
+		
+	# len,dense=sess.run(
+	# [train_length_data,dense_label]
+	# ,feed_dict={input_images : input_batch_data, train_length_data : length_batch_data,sparse_indices : indices ,sparse_values : values ,sparse_shape : dense_shape})
+	# print(len)
+	# print(dense)
+	# len,_,loss=sess.run(
+	# [train_length_data,train_step,cost]
+	# ,feed_dict={input_images : input_batch_data, train_length_data : length_batch_data,sparse_indices : indices ,sparse_values : values ,sparse_shape : dense_shape})
+	# print("the cost is : ", loss)
+	len,_,loss,accuracy_beam,accuracy_greedy,decoded_beam,decoded_greedy=sess.run(
+	[train_length_data,train_step,cost,acc_beam,acc,decoded_beam_dense,decoded_dense]
+	,feed_dict={input_images : input_batch_data, train_length_data : length_batch_data,sparse_indices : indices ,sparse_values : values ,sparse_shape : dense_shape})
+	# len,_,loss,accuracy_beam,accuracy_greedy,decoded_beam,decoded_greedy=sess.run([train_length_data,train_step,cost,acc_beam,acc,decoded_beam_dense,decoded_dense],feed_dict={input_images : input_batch_data, train_length_data : length_batch_data, sparse_label : (sparse_parameters)})
+	
 	print("-------------------------------------------------------------")
 	print("we called the model %d times"%(i+1))
 	print("The current loss is : ",loss)
-	print("The current len is : ",len[0])
-	# print("The accuracy from the greedy decoding is : %d%%"%(accuracy_greedy))
+	print("The current len is : ",len)
+	# print("The accuracy from the greedy decoding is : ",(accuracy_greedy))
 	# print("The network was shown a license plate : ",fun.recon_label(input_label_data[0]))
 	# print("The network predicted a license plate : ",fun.recon_label(decoded_greedy))
 	# print("\n"*2)
-	print("The edit distance is : %d"%(accuracy_beam))
-	print("The network was shown a license plate : ",fun.recon_label(lab))
-	print("The network predicted a license plate : ",fun.recon_label(decoded_beam))
+	print("The edit distance is : ",(accuracy_beam))
+	decoded_beam=np.asarray(decoded_beam, dtype=np.int32)
+	# decoded_beam=np.reshape(decoded_beam,(input_batch_size,1,decoded_beam[1]))
+	# print("The network was shown a license plate : ",fun.recon_label(lab))
+	# print("The network predicted a license plate : ",fun.recon_label(decoded_beam))
+	for j in range(input_batch_size):
+		print("The network was shown a license plate : ",fun.recon_label(input_label_data[j]))
+		print("The network predicted a license plate : ",fun.recon_label(np.matrix(decoded_beam[j])))
+		# print("The network predicted a license plate : ",fun.recon_label(decoded_beam.shape))
 	print("-------------------------------------------------------------")
 	print("\n"*2)
 
-
-
-
-
-
-
-
+	
 
 
 # print("\n"*5)

@@ -45,17 +45,17 @@ def recon_image(image,column_size):
 	
 	
 #function used to create a sparse tensor for ctc
-def _create_sparse_tensor(plate):
-	# plate=[[13,13,35,0,1,1,37,13,13]]
-	plate=tf.contrib.learn.run_n({"a":plate},n=1,feed_dict=None)
-	# print(fun.recon_label(label[0]["a"]))
-	a_t = tf.constant(plate[0]["a"])
-	# a_t = tf.constant(plate)
-	idx = tf.where(tf.not_equal(a_t, -1))
-	# Use tf.shape(a_t, out_type=tf.int64) instead of a_t.get_shape() if tensor shape is dynamic
-	sparse = tf.SparseTensor(idx, tf.gather_nd(a_t, idx), a_t.shape)
-	# dense = tf.sparse_tensor_to_dense(sparse)
-	return (sparse)	
+def _create_sparse_tensor(label_batch):
+
+	idx=np.where( label_batch > -1 )
+	# indices=np.stack((idx[0],idx[1],idx[2]),axis=-1)
+	indices=np.stack((idx[0],idx[1]),axis=-1)
+	label_batch=np.asarray(label_batch, dtype=np.int32)
+	# values=np.reshape(label_batch,label_batch.shape[0]*label_batch.shape[1]*label_batch.shape[2])
+	values=np.reshape(label_batch,label_batch.shape[0]*label_batch.shape[1])
+	# dense_shape=(label_batch.shape[0],label_batch.shape[1],label_batch.shape[2])
+	dense_shape=(label_batch.shape[0],label_batch.shape[1])
+	return (indices,values,dense_shape)	
 	
 	
 #Function for read and decode license plate information from a TFRecords File 
@@ -88,10 +88,10 @@ def read_and_decode(filename_queue,batch_size):
 	)
 	
 	batched_data=tf.cast(batched_data,dtype=tf.float32)
-	batched_data_label=_create_sparse_tensor(batched_data_label[0])
+	
 	batched_data_label=tf.cast(batched_data_label,dtype=tf.int32)
 
-	sequence_lengths=tf.cast(sequence_lengths,dtype=tf.int32)
+	sequence_lengths=tf.cast(sequence_lengths,dtype=tf.int64)
 	
 	return(batched_data,batched_data_label,sequence_lengths)
 
