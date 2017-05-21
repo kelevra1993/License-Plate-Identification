@@ -1,0 +1,2 @@
+model_checkpoint_path: "C:/Users/Robert.Kelevra/Desktop/Deep Learning/License Plate Identification home/weights/weights.ckpt_iteration_500.ckpt"
+all_model_checkpoint_paths: "C:/Users/Robert.Kelevra/Desktop/Deep Learning/License Plate Identification home/weights/weights.ckpt_iteration_500.ckpt"

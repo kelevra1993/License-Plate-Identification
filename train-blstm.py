@@ -4,6 +4,7 @@ import os
 import cv2
 import numpy as np
 import functions as fun
+import time
 
 
 
@@ -17,13 +18,14 @@ os.environ['TF_ENABLE_WINOGRAD_NONFUSED'] = '1'
 sess = tf.InteractiveSession()
 
 #Weight storage
-model_path="D:\license plates/weights"
+model_path="C:/Users/Robert.Kelevra/Desktop/Deep Learning/License Plate Identification home/weights/weights.ckpt"
+weight_saver=500
 
 #Tensorboard information
 tensorboard_path="./tensorboard"
 
 #Network parameters
-learning_rate=1e-3
+learning_rate=1e-5
 momentum=0.9
 
 #Number of ctc_inputs and number of classes
@@ -33,7 +35,7 @@ num_classes=38
 input_feature_length=150
 
 #Size of Input Batch
-input_batch_size=3
+input_batch_size=2
 
 #Number of LSTM BLOCK, be careful tensorflow loosely uses the term LSTMCELL to define an LSTMBLOCK !!! 
 #Litterature diffentiates these two concepts
@@ -50,7 +52,7 @@ num_iterations=10000
 keep_probability=0.5
 
 #Information Dump to our terminal
-info_dump=100
+info_dump=1
 
 #################
 #BATCH RETRIEVAL#
@@ -93,20 +95,34 @@ def bias_variables(shape,identifier):
 #########################################
 #DEFINITION BIDIRECTIONAL NEURAL NETWORK#
 #########################################
+
 with tf.name_scope('Bidirectional-Layer'):
 	#FORWARD AND BACKWARD PASS DEFINITION
-	foward_pass=tf.contrib.rnn.LSTMCell(num_units=num_hidden_units,use_peepholes=True)
-	backward_pass=tf.contrib.rnn.LSTMCell(num_units=num_hidden_units,use_peepholes=True)
-
-	#DEFINING FOWARD OUTPUTS AND BACKWARD OUTPUTS 
-	#DEFING FORWARD AND BACKWARD HIDDEN AND CELL STATES
-	outputs, states=tf.nn.bidirectional_dynamic_rnn(
-	cell_fw=foward_pass,
-	cell_bw=backward_pass,
+	# foward_pass=tf.contrib.rnn.LSTMCell(num_units=num_hidden_units,use_peepholes=True)
+	# backward_pass=tf.contrib.rnn.LSTMCell(num_units=num_hidden_units,use_peepholes=True)
+	# foward_pass=tf.contrib.rnn.LSTMBlockCell(num_units=num_hidden_units,use_peephole=True)
+	# backward_pass=tf.contrib.rnn.LSTMBlockCell(num_units=num_hidden_units,use_peephole=True)
+	# foward_pass_cells=tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.LSTMBlockCell(num_units=num_hidden_units,use_peephole=True) for i in range(4)])
+	# backward_pass_cells=tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.LSTMBlockCell(num_units=num_hidden_units,use_peephole=True) for i in range(4)])
+	foward_pass_cells=[tf.contrib.rnn.LSTMBlockCell(num_units=num_hidden_units,use_peephole=True) for i in range(4)]
+	backward_pass_cells=[tf.contrib.rnn.LSTMBlockCell(num_units=num_hidden_units,use_peephole=True) for i in range(4)]
+	outputs, output_state_fw, output_state_bw=tf.contrib.rnn.stack_bidirectional_dynamic_rnn(
+	cells_fw=foward_pass_cells,
+	cells_bw=backward_pass_cells,
 	inputs=input_images,
 	sequence_length=train_length_data,
-	time_major=False,
 	dtype=tf.float32)
+	
+	
+	#DEFINING FOWARD OUTPUTS AND BACKWARD OUTPUTS 
+	#DEFING FORWARD AND BACKWARD HIDDEN AND CELL STATES
+	# outputs, states=tf.nn.bidirectional_dynamic_rnn(
+	# cell_fw=foward_pass,
+	# cell_bw=backward_pass,
+	# inputs=input_images,
+	# sequence_length=train_length_data,
+	# time_major=False,
+	# dtype=tf.float32)
 
 
 	#HERE WE ADD OUR FORWARD AND OUR BACKWARD PASS, 
@@ -137,7 +153,7 @@ with tf.name_scope('CTC-SOFT-MAX-LAYER'):
 with tf.name_scope('DECODER'):
 	#COMPUTATION OF GREEDY DECODING AND BEAM SEARCH DECODING 
 	#WE HAVE NOT YET DECIDED ON WHICH ONE OF THE TWO DECODERS WE WILL USE FOR FINAL TRAINING 
-	decoded,log_probability=tf.nn.ctc_greedy_decoder(inputs_ctc,sequence_length=train_length_data,merge_repeated=False)
+	decoded,log_probability=tf.nn.ctc_greedy_decoder(inputs_ctc,sequence_length=train_length_data,merge_repeated=True)
 	decoded_beam,log_probability_beam=tf.nn.ctc_beam_search_decoder(inputs_ctc,sequence_length=train_length_data,beam_width=200, top_paths=2,merge_repeated=False)
 
 	#TRANSFORMATION OF SPARSE OUTPUTS FROM OUR DECODERS
@@ -145,6 +161,7 @@ with tf.name_scope('DECODER'):
 	decoded_beam_dense=tf.sparse_tensor_to_dense(decoded_beam[0])
 
 sparse_label=tf.cast(sparse_label,dtype=tf.int64)
+
 #MODEL EVALUATION 
 acc=tf.edit_distance(decoded[0],sparse_label,normalize=False)
 acc_beam=tf.edit_distance(decoded_beam[0],sparse_label,normalize=False)
@@ -175,14 +192,14 @@ mixed_writer=tf.summary.FileWriter(tensorboard_path,sess.graph)
 sess.run(tf.global_variables_initializer())
 sess.run(tf.local_variables_initializer())
 
-#For model saving and restoration, we keep at most 100000 files in our checkpoint
+#MODEL SAVING DEFINITION + FILE LIMIT
 saver=tf.train.Saver(max_to_keep=100000)
 
 print("\n"*30)
 print("----------Tensorflow has been set----------")
 print("\n"*10)
 
-#First we check if there is a model, if so, we restore it
+#MODEL CHECK AND RESTORATION
 if(os.path.isfile(model_path+".meta")):
     print("")
     print( "We found a previous model")
@@ -207,19 +224,17 @@ threads=tf.train.start_queue_runners(coord=coord)
 ##########################################
 
 #MIGHT WANT TO EVALUATE RUN TIME AFTER WE HAVE COMPLETELY ESTABLISHED THE MODEL 
-
+start=time.time()
 for i in range(num_iterations):
     
     #FURTHER DOWN THE PIPELINE WE WILL DEFINE OUR MODEL SAVING PATHS
     
     #FIRST RUN OUR BATCH FETCHING METHOD FOR PREPROCESSING (CASTING, TURNING DENSE VECTORS INTO SPARSE VECTORS)
-
+	
 	input_batch_data, input_label_data, length_batch_data=sess.run([pre_train_data,pre_label_data,pre_length_data])
-	# print("\n"*10)
-	# print(input_batch_data.shape)
-	# print(input_label_data.shape)
-	# print(length_batch_data.shape)
+
 	sparse_parameters=fun._create_sparse_tensor(input_label_data[:,0,:])
+	
     #FURTHER DOWN THE PIPELINE WE WILL DEFINE OUR VALIDATION EVALUATION DURING TRAINING 
 	#OPTIMIZATION STEP 
 	indices=sparse_parameters[0]
@@ -227,106 +242,35 @@ for i in range(num_iterations):
 	dense_shape=sparse_parameters[2]
 
 		
-	# len,dense=sess.run(
-	# [train_length_data,dense_label]
-	# ,feed_dict={input_images : input_batch_data, train_length_data : length_batch_data,sparse_indices : indices ,sparse_values : values ,sparse_shape : dense_shape})
-	# print(len)
-	# print(dense)
-	# len,_,loss=sess.run(
-	# [train_length_data,train_step,cost]
-	# ,feed_dict={input_images : input_batch_data, train_length_data : length_batch_data,sparse_indices : indices ,sparse_values : values ,sparse_shape : dense_shape})
-	# print("the cost is : ", loss)
 	len,_,loss,accuracy_beam,accuracy_greedy,decoded_beam,decoded_greedy,summary=sess.run(
 	[train_length_data,train_step,cost,acc_beam,acc,decoded_beam_dense,decoded_dense,merged]
 	,feed_dict={input_images : input_batch_data, train_length_data : length_batch_data,sparse_indices : indices ,sparse_values : values ,sparse_shape : dense_shape})
 	# len,_,loss,accuracy_beam,accuracy_greedy,decoded_beam,decoded_greedy=sess.run([train_length_data,train_step,cost,acc_beam,acc,decoded_beam_dense,decoded_dense],feed_dict={input_images : input_batch_data, train_length_data : length_batch_data, sparse_label : (sparse_parameters)})
 	
-	print("-------------------------------------------------------------")
-	print("we called the model %d times"%(i+1))
-	print("The current loss is : ",loss)
-	print("The current len is : ",len)
-	print("The edit distance is for beam decoding is : ",(accuracy_beam))
-	print("The edit distance is for greedy decoding is : ",(accuracy_greedy))
-	decoded_beam=np.asarray(decoded_beam, dtype=np.int32)
-	decoded_greedy=np.asarray(decoded_greedy, dtype=np.int32)
-	for j in range(input_batch_size):
-		print("\n")
-		print("The network was shown a license plate : ",fun.recon_label(input_label_data[j]))
-		print("Beam decode predicted a license plate : ",fun.recon_label(np.matrix(decoded_beam[j])))
-		# print("Greedy decode predicted a license plate : ",fun.recon_label(np.matrix(decoded_greedy[j])))
-	print("-------------------------------------------------------------")
-	print("\n"*2)
+	if((i+1)%info_dump==0):
+		print("-------------------------------------------------------------")
+		print("we called the model %d times"%(i+1))
+		print("The current loss is : ",loss)
+		print("The current len is : ",len)
+		print("The edit distance is for beam decoding is : ",(accuracy_beam))
+		print("The edit distance is for greedy decoding is : ",(accuracy_greedy))
+		decoded_beam=np.asarray(decoded_beam, dtype=np.int32)
+		decoded_greedy=np.asarray(decoded_greedy, dtype=np.int32)
+		for j in range(input_batch_size):
+			print("\n")
+			print("The network was shown a license plate : ",fun.recon_label(input_label_data[j]))
+			print("Beam decode predicted a license plate : ",fun.recon_label(np.matrix(decoded_beam[j])))
+			print("Greedy decode predicted a license plate : ",fun.recon_label(np.matrix(decoded_greedy[j])))
+		end=time.time()
+		print("these %d iterations took %d seconds"%(info_dump,(end-start)))
+		start=time.time()
+		print("-------------------------------------------------------------")
+		print("\n"*2)
 	mixed_writer.add_summary(summary,i)
-	'''if((i+1)%weight_saver==0):
-        print("we are at iteration %d so we are going to save the model"%(i+1))
-        print("model is being saved.....")
-        save_path=saver.save(sess,model_path+"_iteration_%d.ckpt"%(i+1))
-        print("model has been saved succesfully")'''
+	if((i+1)%weight_saver==0):
+		print("we are at iteration %d so we are going to save the model"%(i+1))
+		print("model is being saved.....")
+		save_path=saver.save(sess,model_path+"_iteration_%d.ckpt"%(i+1))
+		print("model has been saved succesfully")
+"""print(dir(tf.contrib.cudnn_rnn))"""
 	
-
-
-# print("\n"*5)
-# inputs_ctc=np.zeros((1,265,38))
-# labelling=[[
-# 13,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,
-# 13,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,
-# 36,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,
-# 0,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,
-# 1,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,
-# 1,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,
-# 36,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,
-# 13,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,
-# 37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,13
-# ]]
-# labelling=[[13,13,35,0,1,1,36,13,13]]
-# print(len(labelling[0]))
-# j=0
-# for k in labelling[0]:
-    # inputs_ctc[0,j,k]=100
-    # j=j+1
-# print(inputs_ctc)
-# print(inputs_ctc.shape)
-# inputs_ctc=tf.cast(tf.stack(inputs_ctc),dtype=tf.float32)
-
-
-# results=tf.contrib.learn.run_n({"a":foward_outputs,
-								# "b":backward_outputs,
-								# "c":foward_output_state,
-								# "d":backward_output_state,
-								# "e":outputs,
-								# "f":inputs_ctc,
-								# "cost":cost,
-								# "greed":decoded_dense,
-								# "beam":decoded_beam_dense,
-								# "log_greed":log_probability,
-								# "log_beam":log_probability_beam,
-								# "acc":acc,
-								# "acc_beam":acc_beam   ,
-								# },
-								# n=1,feed_dict=None)
-
-								
-								
-# print(results[0]["a"].shape)								
-# print(results[0]["b"].shape)								
-# print(results[0]["c"].h.shape)								
-# print(results[0]["c"].c.shape)								
-# print(results[0]["d"].h.shape)								
-# print(results[0]["d"].c.shape)
-# print(results[0]["e"].shape)
-# print("\n"*5)
-# print(results[0]["cost"])
-# print(results[0]["cost"].shape)
-# print(results[0]["greed"])
-# print("GREEDY DECODER GIVES OUT :" ,fun.recon_label(results[0]["greed"]))
-# print(results[0]["beam"])
-# print("BEAM SEARCH DECODER GIVES OUT :",fun.recon_label(results[0]["beam"]))
-# print(results[0]["log_greed"])
-# print(results[0]["log_beam"])
-# print(results[0]["acc"])
-# print(results[0]["acc_beam"])
-
-# print(results[0]["a"])									
-# print(results[0]["b"])							
-# outputs=(foward_outputs, backward_outputs)
-
