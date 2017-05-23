@@ -18,14 +18,14 @@ os.environ['TF_ENABLE_WINOGRAD_NONFUSED'] = '1'
 sess = tf.InteractiveSession()
 
 #Weight storage
-model_path="C:/Users/Robert.Kelevra/Desktop/Deep Learning/License Plate Identification home/weights/weights.ckpt"
+model_path="./weights/weights.ckpt"
 weight_saver=500
 
 #Tensorboard information
 tensorboard_path="./tensorboard"
 
 #Network parameters
-learning_rate=1e-5
+learning_rate=1e-4
 momentum=0.9
 
 #Number of ctc_inputs and number of classes
@@ -39,7 +39,7 @@ input_batch_size=2
 
 #Number of LSTM BLOCK, be careful tensorflow loosely uses the term LSTMCELL to define an LSTMBLOCK !!! 
 #Litterature diffentiates these two concepts
-num_hidden_units=200
+num_hidden_units=800
 
 #Data files....
 '''WE WILL NEED ONE FOR A VALIDATION SET WILL COME LATER IN THE FUTURE'''
@@ -104,8 +104,12 @@ with tf.name_scope('Bidirectional-Layer'):
 	# backward_pass=tf.contrib.rnn.LSTMBlockCell(num_units=num_hidden_units,use_peephole=True)
 	# foward_pass_cells=tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.LSTMBlockCell(num_units=num_hidden_units,use_peephole=True) for i in range(4)])
 	# backward_pass_cells=tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.LSTMBlockCell(num_units=num_hidden_units,use_peephole=True) for i in range(4)])
-	foward_pass_cells=[tf.contrib.rnn.LSTMBlockCell(num_units=num_hidden_units,use_peephole=True) for i in range(4)]
-	backward_pass_cells=[tf.contrib.rnn.LSTMBlockCell(num_units=num_hidden_units,use_peephole=True) for i in range(4)]
+	
+	#Faster LSTM cells
+	foward_pass_cells=[tf.contrib.rnn.LSTMCell(num_units=num_hidden_units,use_peepholes=True) for i in range(4)]
+	backward_pass_cells=[tf.contrib.rnn.LSTMCell(num_units=num_hidden_units,use_peepholes=True) for i in range(4)]
+	
+	#Stacking of LSTM Layers
 	outputs, output_state_fw, output_state_bw=tf.contrib.rnn.stack_bidirectional_dynamic_rnn(
 	cells_fw=foward_pass_cells,
 	cells_bw=backward_pass_cells,
@@ -256,6 +260,7 @@ for i in range(num_iterations):
 		print("The edit distance is for greedy decoding is : ",(accuracy_greedy))
 		decoded_beam=np.asarray(decoded_beam, dtype=np.int32)
 		decoded_greedy=np.asarray(decoded_greedy, dtype=np.int32)
+		
 		for j in range(input_batch_size):
 			print("\n")
 			print("The network was shown a license plate : ",fun.recon_label(input_label_data[j]))
