@@ -22,7 +22,7 @@ model_path="./weights/weights.ckpt"
 weight_saver=500
 
 #Tensorboard information
-tensorboard_path="./tensorboard"
+tensorboard_path="./tensorboard/"
 
 #Network parameters
 learning_rate=1e-4
@@ -35,23 +35,24 @@ num_classes=38
 input_feature_length=150
 
 #Size of Input Batch
-input_batch_size=3
+input_batch_size=20
 
 #Number of LSTM BLOCK, be careful tensorflow loosely uses the term LSTMCELL to define an LSTMBLOCK !!! 
-#Litterature diffentiates these two concepts
+#Litterature diffenciates these two concepts
 num_hidden_units=600
+
 #Data files....
 '''WE WILL NEED ONE FOR A VALIDATION SET WILL COME LATER IN THE FUTURE'''
 tfrecords_file="./data/train.tfrecords"
 
 #Number of iterations that we will run 
-num_iterations=10000
+num_iterations=100000
 
 #Dropout for validation
 keep_probability=0.5
 
 #Information Dump to our terminal
-info_dump=1
+info_dump=50
 
 #################
 #BATCH RETRIEVAL#
@@ -96,12 +97,6 @@ def bias_variables(shape,identifier):
 
 with tf.name_scope('Bidirectional-Layer'):
 	#FORWARD AND BACKWARD PASS DEFINITION
-	# foward_pass=tf.contrib.rnn.LSTMCell(num_units=num_hidden_units,use_peepholes=True)
-	# backward_pass=tf.contrib.rnn.LSTMCell(num_units=num_hidden_units,use_peepholes=True)
-	# foward_pass=tf.contrib.rnn.LSTMBlockCell(num_units=num_hidden_units,use_peephole=True)
-	# backward_pass=tf.contrib.rnn.LSTMBlockCell(num_units=num_hidden_units,use_peephole=True)
-	# foward_pass_cells=tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.LSTMBlockCell(num_units=num_hidden_units,use_peephole=True) for i in range(4)])
-	# backward_pass_cells=tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.LSTMBlockCell(num_units=num_hidden_units,use_peephole=True) for i in range(4)])
 	
 	#Faster LSTM cells
 	foward_pass_cells=[tf.contrib.rnn.LSTMCell(num_units=num_hidden_units,use_peepholes=True) for i in range(4)]
@@ -114,23 +109,8 @@ with tf.name_scope('Bidirectional-Layer'):
 	inputs=input_images,
 	sequence_length=train_length_data,
 	dtype=tf.float32)
-	
-	
-	#DEFINING FOWARD OUTPUTS AND BACKWARD OUTPUTS 
-	#DEFING FORWARD AND BACKWARD HIDDEN AND CELL STATES
-	# outputs, states=tf.nn.bidirectional_dynamic_rnn(
-	# cell_fw=foward_pass,
-	# cell_bw=backward_pass,
-	# inputs=input_images,
-	# sequence_length=train_length_data,
-	# time_major=False,
-	# dtype=tf.float32)
-
 
 	#HERE WE ADD OUR FORWARD AND OUR BACKWARD PASS, 
-	# WE MIGHT HAVE TO CHANGE THIS METHOD AFTERWARDS MAYBE USE SOME KIND OF CONCATENATION
-	#First we reshape our outputs before doing a fully connected feedfoward on them
-	#Initially outputs is a tuple, we chose to concatenate foward and backward outputs 
 	outputs=tf.split(outputs,2,axis=2)
 	outputs=tf.reduce_sum(outputs, axis=0)
 	outputs=tf.reshape(outputs, [-1, num_hidden_units])
@@ -148,7 +128,7 @@ with tf.name_scope('BIDIRECTIONAL-TO-CTC-LAYER'):
 with tf.name_scope('CTC-SOFT-MAX-LAYER'):
 	#CTC LOSS COMPUTATION 
 	cost=tf.nn.ctc_loss(inputs=inputs_ctc, labels=sparse_label, sequence_length=train_length_data, preprocess_collapse_repeated=False, ctc_merge_repeated=True,time_major=False)
-
+	cost = tf.reduce_mean(cost)
 	#TRANSPOSAL OF OUR CTC INPUTS TO MAKE THEM TIME MAJOR FOR OUR DECODER
 	inputs_ctc=tf.transpose(inputs_ctc,(1,0,2))
 
@@ -166,7 +146,10 @@ sparse_label=tf.cast(sparse_label,dtype=tf.int64)
 
 #MODEL EVALUATION 
 acc=tf.edit_distance(decoded[0],sparse_label,normalize=False)
+acc=tf.reduce_mean(acc)
+
 acc_beam=tf.edit_distance(decoded_beam[0],sparse_label,normalize=False)
+acc_beam=tf.reduce_mean(acc_beam)
 
 with tf.name_scope('Gradient-computation'):
 	train_step=tf.train.AdamOptimizer(learning_rate,momentum).minimize(cost)
@@ -178,10 +161,10 @@ with tf.name_scope('Gradient-computation'):
 ############################
 
 
-cost_view=tf.summary.scalar("cross_entropy",tf.reduce_mean(cost))
+cost_view=tf.summary.scalar("cross_entropy",cost)
 
-accuracy_view=tf.summary.scalar("accuracy_greedy",tf.reduce_mean(acc))
-accuracy_view=tf.summary.scalar("accuracy_beam",tf.reduce_mean(acc_beam))
+accuracy_view=tf.summary.scalar("accuracy_greedy",acc)
+accuracy_view=tf.summary.scalar("accuracy_beam",acc_beam)
 
 #merge all of the variables for visualization
 merged=tf.summary.merge_all()
@@ -243,26 +226,25 @@ for i in range(num_iterations):
 	values=sparse_parameters[1]
 	dense_shape=sparse_parameters[2]
 	
-	len,_,loss,accuracy_beam,accuracy_greedy,decoded_beam,decoded_greedy,summary=sess.run(
-	[train_length_data,train_step,cost,acc_beam,acc,decoded_beam_dense,decoded_dense,merged]
+	_,loss,accuracy_beam,accuracy_greedy,decoded_beam,decoded_greedy,summary=sess.run(
+	[train_step,cost,acc_beam,acc,decoded_beam_dense,decoded_dense,merged]
 	,feed_dict={input_images : input_batch_data, train_length_data : length_batch_data,sparse_indices : indices ,sparse_values : values ,sparse_shape : dense_shape})
-	# len,_,loss,accuracy_beam,accuracy_greedy,decoded_beam,decoded_greedy=sess.run([train_length_data,train_step,cost,acc_beam,acc,decoded_beam_dense,decoded_dense],feed_dict={input_images : input_batch_data, train_length_data : length_batch_data, sparse_label : (sparse_parameters)})
+	
 
 	if((i+1)%info_dump==0):
 		print("-------------------------------------------------------------")
 		print("we called the model %d times"%(i+1))
 		print("The current loss is : ",loss)
-		print("The current len is : ",len)
-		print("The edit distance is for beam decoding is : ",(accuracy_beam))
-		print("The edit distance is for greedy decoding is : ",(accuracy_greedy))
+		print("The mean edit distance is for beam decoding is : ",(accuracy_beam))
+		print("The mean edit distance is for greedy decoding is : ",(accuracy_greedy))
 		decoded_beam=np.asarray(decoded_beam, dtype=np.int32)
 		decoded_greedy=np.asarray(decoded_greedy, dtype=np.int32)
 		
-		for j in range(input_batch_size):
-			print("\n")
-			print("The network was shown a license plate : ",fun.recon_label(input_label_data[j]))
-			print("Beam decode predicted a license plate : ",fun.recon_label(np.matrix(decoded_beam[j])))
-			print("Greedy decode predicted a license plate : ",fun.recon_label(np.matrix(decoded_greedy[j])))
+		# for j in range(input_batch_size):
+			# print("\n")
+			# print("The network was shown a license plate : ",fun.recon_label(input_label_data[j]))
+			# print("Beam decode predicted a license plate : ",fun.recon_label(np.matrix(decoded_beam[j])))
+			# print("Greedy decode predicted a license plate : ",fun.recon_label(np.matrix(decoded_greedy[j])))
 		end=time.time()
 		print("these %d iterations took %d seconds"%(info_dump,(end-start)))
 		start=time.time()
