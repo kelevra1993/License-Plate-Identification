@@ -35,12 +35,11 @@ num_classes=38
 input_feature_length=150
 
 #Size of Input Batch
-input_batch_size=2
+input_batch_size=3
 
 #Number of LSTM BLOCK, be careful tensorflow loosely uses the term LSTMCELL to define an LSTMBLOCK !!! 
 #Litterature diffentiates these two concepts
-num_hidden_units=800
-
+num_hidden_units=600
 #Data files....
 '''WE WILL NEED ONE FOR A VALIDATION SET WILL COME LATER IN THE FUTURE'''
 tfrecords_file="./data/train.tfrecords"
@@ -71,7 +70,6 @@ with tf.name_scope('Input-producer'):
 	#features along this same axis, right now our data is already correctly segmented
 	  
 	input_images=tf.placeholder(tf.float32,shape=[None,None,input_feature_length],name='Train_input')
-
 	train_length_data=tf.placeholder(tf.int32)
 	sparse_indices=tf.placeholder(tf.int64)
 	sparse_values=tf.placeholder(tf.int32)
@@ -133,7 +131,7 @@ with tf.name_scope('Bidirectional-Layer'):
 	# WE MIGHT HAVE TO CHANGE THIS METHOD AFTERWARDS MAYBE USE SOME KIND OF CONCATENATION
 	#First we reshape our outputs before doing a fully connected feedfoward on them
 	#Initially outputs is a tuple, we chose to concatenate foward and backward outputs 
-	# (foward_outputs, backward_outputs)=outputs
+	outputs=tf.split(outputs,2,axis=2)
 	outputs=tf.reduce_sum(outputs, axis=0)
 	outputs=tf.reshape(outputs, [-1, num_hidden_units])
 
@@ -244,13 +242,12 @@ for i in range(num_iterations):
 	indices=sparse_parameters[0]
 	values=sparse_parameters[1]
 	dense_shape=sparse_parameters[2]
-
-		
+	
 	len,_,loss,accuracy_beam,accuracy_greedy,decoded_beam,decoded_greedy,summary=sess.run(
 	[train_length_data,train_step,cost,acc_beam,acc,decoded_beam_dense,decoded_dense,merged]
 	,feed_dict={input_images : input_batch_data, train_length_data : length_batch_data,sparse_indices : indices ,sparse_values : values ,sparse_shape : dense_shape})
 	# len,_,loss,accuracy_beam,accuracy_greedy,decoded_beam,decoded_greedy=sess.run([train_length_data,train_step,cost,acc_beam,acc,decoded_beam_dense,decoded_dense],feed_dict={input_images : input_batch_data, train_length_data : length_batch_data, sparse_label : (sparse_parameters)})
-	
+
 	if((i+1)%info_dump==0):
 		print("-------------------------------------------------------------")
 		print("we called the model %d times"%(i+1))
@@ -277,5 +274,5 @@ for i in range(num_iterations):
 		print("model is being saved.....")
 		save_path=saver.save(sess,model_path+"_iteration_%d.ckpt"%(i+1))
 		print("model has been saved succesfully")
-"""print(dir(tf.contrib.cudnn_rnn))"""
+
 	
