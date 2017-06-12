@@ -15,33 +15,32 @@ os.environ['TF_ENABLE_WINOGRAD_NONFUSED'] = '1'
 ####################################################
 #SESSION DEFINITION
 sess = tf.InteractiveSession()
-#Weight storage
+#Weight storage path 
 model_path="D:/LP weights/weights.ckpt"
-#Number of ctc_inputs and number of classes
+#Number of ctc_inputs and number of classes 
+# The number is equal to 26 letters + 10 digits + blank label
 num_classes=38
-#Input height
+#Input height, here the height of the images is actually 50 
+#images were depth "unconcanated" which yields 50 * 3 
 input_feature_length=150
 #Size of Input Batch
 input_batch_size=10
 #Number of LSTM BLOCK, be careful tensorflow loosely uses the term LSTMCELL to define an LSTMBLOCK !!! 
 #Litterature diffenciates these two concepts
 num_hidden_units=600
-#Data files....
+#Data file path
 tfrecords_file="D:/LP data/valid2000.tfrecords"
-#Number of iterations that we will run 
+#Number of iterations that we will run to process the whole tfrecord file, here we have an input batch of 10
+#so running 200 iterations lets us process the 2000 images that are in the tfrecord file 
 num_iterations=200
-#Information Dump to our terminal
-info_dump=1
 #This will check how many files are in the checkpoint that will be used for model evaluation
 ckpt=tf.train.get_checkpoint_state("D:\LP weights")
 models=ckpt.all_model_checkpoint_paths[:]
 num_models=len(models)
-evaluation="evaluations_256x170.txt"
 print("We are evaluating : %d models" %(num_models))
-#File that contains information of model perfomances 
+#File that contains information of model perfomances that have been evaluated
+#We will be filling this file iteratively
 evaluation="license_plate_models.txt"
-
-
 
 #################
 #BATCH RETRIEVAL#
@@ -191,10 +190,6 @@ for model in models :
 		state=100*(i+1)/num_iterations
 		if(state%25==0):
 			print("Evaluation of model %s is at %d%% "%(model,state))
-			for j in range(1):
-				print("The network was shown a license plate : ",fun.recon_label(input_label_data[j]))
-		#FURTHER DOWN THE PIPELINE WE WILL DEFINE OUR MODEL SAVING PATHS
-		
 		#FIRST RUN OUR BATCH FETCHING METHOD FOR PREPROCESSING (CASTING, TURNING DENSE VECTORS INTO SPARSE VECTORS)
 		
 		input_batch_data, input_label_data, length_batch_data=sess.run([pre_train_data,pre_label_data,pre_length_data])
@@ -222,6 +217,7 @@ for model in models :
 		for a_b in accuracy_greedy:
 			if( a_b!=0):
 				greedy_error=greedy_error+1
+				
 	end=time.time()
 	final_beam_accuracy=(100*(1.0-(beam_error/(input_batch_size * num_iterations ))))
 	final_greedy_accuracy=(100*(1.0-(greedy_error/(input_batch_size * num_iterations ))))
@@ -232,7 +228,7 @@ for model in models :
 	print("Beam decoder yielded an accuracy of %.4f%%"%(final_beam_accuracy))
 	print("Greedy decoder yielded an accuracy of %.4f%%"%(final_greedy_accuracy))
 	print("The model was shown %d images"%(input_batch_size * num_iterations))
-
+	#Dumping information into our evaluation file
 	target.write("Evaluation of model %s yields a beam decoding accuracy of %.4f%%"%(model,final_beam_accuracy))
 	target.write("\n")
 	target.write("Evaluation of model %s yields a beam decoding accuracy of %.4f%%"%(model,final_greedy_accuracy))

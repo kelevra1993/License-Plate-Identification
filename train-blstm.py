@@ -7,8 +7,6 @@ import numpy as np
 import functions as fun
 import time
 
-
-
 #CODE THAT SPEEDS UP TRAINING BY 37.5 PERCENT
 os.environ['TF_ENABLE_WINOGRAD_NONFUSED'] = '1'
 
@@ -19,11 +17,11 @@ os.environ['TF_ENABLE_WINOGRAD_NONFUSED'] = '1'
 sess = tf.InteractiveSession()
 
 #Weight storage
-model_path="./weights/weights.ckpt"
+model_path="D:/LP weights/weights.ckpt"
 weight_saver=500
 
 #Tensorboard information
-tensorboard_path="./tensorboard/"
+tensorboard_path="./tensorboard/Fr-train"
 
 #Network parameters
 learning_rate=1e-4
@@ -44,10 +42,10 @@ num_hidden_units=600
 
 #Data files....
 '''WE WILL NEED ONE FOR A VALIDATION SET WILL COME LATER IN THE FUTURE'''
-tfrecords_file="./data/train.tfrecords"
+tfrecords_file="D:/LP data/train.tfrecords"
 
 #Number of iterations that we will run 
-num_iterations=100000
+num_iterations=5000000
 
 #Dropout for validation
 keep_probability=0.5
@@ -181,9 +179,9 @@ sess.run(tf.local_variables_initializer())
 #MODEL SAVING DEFINITION + FILE LIMIT
 saver=tf.train.Saver(max_to_keep=100000)
 
-print("\n"*30)
+print("\n"*5)
 print("----------Tensorflow has been set----------")
-print("\n"*10)
+print("\n"*5)
 
 #MODEL CHECK AND RESTORATION
 if(os.path.isfile(model_path+".meta")):
@@ -241,11 +239,11 @@ for i in range(num_iterations):
 		decoded_beam=np.asarray(decoded_beam, dtype=np.int32)
 		decoded_greedy=np.asarray(decoded_greedy, dtype=np.int32)
 		
-		# for j in range(input_batch_size):
-			# print("\n")
-			# print("The network was shown a license plate : ",fun.recon_label(input_label_data[j]))
-			# print("Beam decode predicted a license plate : ",fun.recon_label(np.matrix(decoded_beam[j])))
-			# print("Greedy decode predicted a license plate : ",fun.recon_label(np.matrix(decoded_greedy[j])))
+		for j in range(2):
+			print("\n")
+			print("The network was shown a license plate : ",fun.recon_label(input_label_data[j]))
+			print("Beam decode predicted a license plate : ",fun.recon_label(np.matrix(decoded_beam[j])))
+			print("Greedy decode predicted a license plate : ",fun.recon_label(np.matrix(decoded_greedy[j])))
 		end=time.time()
 		print("these %d iterations took %d seconds"%(info_dump,(end-start)))
 		start=time.time()
