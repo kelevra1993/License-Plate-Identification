@@ -1,5 +1,5 @@
 import tensorflow as tf
-import sys 
+import sys  
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 import cv2
@@ -155,6 +155,8 @@ coord=tf.train.Coordinator()
 threads=tf.train.start_queue_runners(coord=coord)
 
 #MODEL TESTING
+error_dump=False
+models=["./weights/weights.ckpt"]
 for model in models : 
 
 	#File that contains model evaluation perfomance 
@@ -162,6 +164,7 @@ for model in models :
 	
 	#so we have a certain number of models that we are going to be testing.
 	#First we check if there is a model, if so, we restore it
+	print(model)
 	if(os.path.isfile(model+".meta")):
 		print("")
 		print( "We found a previous model")
@@ -209,12 +212,14 @@ for model in models :
 		
 				
 		#evaluation of beam decoding accuracy 
-		for a_b in accuracy_beam:
+		for ind,a_b in enumerate(accuracy_beam):
 			if( a_b!=0):
 				beam_error=beam_error+1
+				if(error_dump):
+					cv2.imwrite("./errors/original_"+fun.recon_label(input_label_data[ind])+"_predicted_"+fun.recon_label(np.matrix(decoded_beam[ind]))+".tiff",fun.recon_image(input_batch_data[ind],length_batch_data[ind]))
 		
 		#evaluation of greedy decoding accuracy
-		for a_b in accuracy_greedy:
+		for ind,a_b in enumerate(accuracy_greedy):
 			if( a_b!=0):
 				greedy_error=greedy_error+1
 				
@@ -229,11 +234,11 @@ for model in models :
 	print("Greedy decoder yielded an accuracy of %.4f%%"%(final_greedy_accuracy))
 	print("The model was shown %d images"%(input_batch_size * num_iterations))
 	#Dumping information into our evaluation file
-	target.write("Evaluation of model %s yields a beam decoding accuracy of %.4f%%"%(model,final_beam_accuracy))
-	target.write("\n")
-	target.write("Evaluation of model %s yields a beam decoding accuracy of %.4f%%"%(model,final_greedy_accuracy))
-	target.write("\n"*2)
-	target.close()
+	# target.write("Evaluation of model %s yields a beam decoding accuracy of %.4f%%"%(model,final_beam_accuracy))
+	# target.write("\n")
+	# target.write("Evaluation of model %s yields a beam decoding accuracy of %.4f%%"%(model,final_greedy_accuracy))
+	# target.write("\n"*2)
+	# target.close()
 	print("these %d iterations took %d seconds"%(num_iterations,(end-start)))
 	start=time.time()
 	print("-------------------------------------------------------------")

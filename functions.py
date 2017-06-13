@@ -1,10 +1,10 @@
 import cv2
 import numpy as np
 import tensorflow as tf
-
+ 
 #we have 37 labels (digits,alphabets and "-") and one blank label for ctc 
 num_classes=38
-
+ 
 def recon_label(label):
 	#Our final string plate from the hot vector
 	full_label=[]
@@ -41,7 +41,8 @@ def recon_image(image,column_size):
         if(i>99):
             for j in range(column_size):
                 buffer[i-100,j,2]=image[i,j]
-    return(buffer/255)
+    # return(buffer/255)
+    return(buffer)
 	
 	
 #function used to create a sparse tensor for ctc
