@@ -1,0 +1,303 @@
+Evaluation of model D:/LP weights/weights.ckpt_iteration_20000.ckpt yields a beam decoding accuracy of 82.7000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_20000.ckpt yields a beam decoding accuracy of 82.7500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_20500.ckpt yields a beam decoding accuracy of 81.3500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_20500.ckpt yields a beam decoding accuracy of 81.2500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_21000.ckpt yields a beam decoding accuracy of 83.8000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_21000.ckpt yields a beam decoding accuracy of 83.7500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_21500.ckpt yields a beam decoding accuracy of 81.6000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_21500.ckpt yields a beam decoding accuracy of 81.6500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_22000.ckpt yields a beam decoding accuracy of 84.5500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_22000.ckpt yields a beam decoding accuracy of 84.5500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_22500.ckpt yields a beam decoding accuracy of 81.7500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_22500.ckpt yields a beam decoding accuracy of 81.7500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_23000.ckpt yields a beam decoding accuracy of 84.9500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_23000.ckpt yields a beam decoding accuracy of 84.9000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_23500.ckpt yields a beam decoding accuracy of 84.1500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_23500.ckpt yields a beam decoding accuracy of 84.1500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_24000.ckpt yields a beam decoding accuracy of 81.8000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_24000.ckpt yields a beam decoding accuracy of 81.8000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_24500.ckpt yields a beam decoding accuracy of 83.4500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_24500.ckpt yields a beam decoding accuracy of 83.3500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_25000.ckpt yields a beam decoding accuracy of 82.8500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_25000.ckpt yields a beam decoding accuracy of 82.9000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_25500.ckpt yields a beam decoding accuracy of 86.2000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_25500.ckpt yields a beam decoding accuracy of 86.2000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_26000.ckpt yields a beam decoding accuracy of 85.0500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_26000.ckpt yields a beam decoding accuracy of 85.1500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_26500.ckpt yields a beam decoding accuracy of 86.2500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_26500.ckpt yields a beam decoding accuracy of 86.2500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_27000.ckpt yields a beam decoding accuracy of 85.9500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_27000.ckpt yields a beam decoding accuracy of 85.9500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_27500.ckpt yields a beam decoding accuracy of 85.7000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_27500.ckpt yields a beam decoding accuracy of 85.7000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_28000.ckpt yields a beam decoding accuracy of 85.2500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_28000.ckpt yields a beam decoding accuracy of 85.3000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_28500.ckpt yields a beam decoding accuracy of 84.8500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_28500.ckpt yields a beam decoding accuracy of 84.8000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_29000.ckpt yields a beam decoding accuracy of 83.4000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_29000.ckpt yields a beam decoding accuracy of 83.2000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_29500.ckpt yields a beam decoding accuracy of 86.1000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_29500.ckpt yields a beam decoding accuracy of 86.1000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_30000.ckpt yields a beam decoding accuracy of 83.5500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_30000.ckpt yields a beam decoding accuracy of 83.4000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_30500.ckpt yields a beam decoding accuracy of 82.8500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_30500.ckpt yields a beam decoding accuracy of 82.7500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_31000.ckpt yields a beam decoding accuracy of 86.4500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_31000.ckpt yields a beam decoding accuracy of 86.3500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_31500.ckpt yields a beam decoding accuracy of 80.8000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_31500.ckpt yields a beam decoding accuracy of 80.7500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_32000.ckpt yields a beam decoding accuracy of 83.5500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_32000.ckpt yields a beam decoding accuracy of 83.5000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_32500.ckpt yields a beam decoding accuracy of 86.0500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_32500.ckpt yields a beam decoding accuracy of 86.1000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_33000.ckpt yields a beam decoding accuracy of 86.9000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_33000.ckpt yields a beam decoding accuracy of 86.8500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_33500.ckpt yields a beam decoding accuracy of 84.3500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_33500.ckpt yields a beam decoding accuracy of 84.3500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_34000.ckpt yields a beam decoding accuracy of 85.7000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_34000.ckpt yields a beam decoding accuracy of 85.6500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_34500.ckpt yields a beam decoding accuracy of 83.9500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_34500.ckpt yields a beam decoding accuracy of 84.0000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_35000.ckpt yields a beam decoding accuracy of 85.9500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_35000.ckpt yields a beam decoding accuracy of 85.9000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_35500.ckpt yields a beam decoding accuracy of 84.9500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_35500.ckpt yields a beam decoding accuracy of 84.9000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_36000.ckpt yields a beam decoding accuracy of 85.4000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_36000.ckpt yields a beam decoding accuracy of 85.4000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_36500.ckpt yields a beam decoding accuracy of 85.7000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_36500.ckpt yields a beam decoding accuracy of 85.7000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_37000.ckpt yields a beam decoding accuracy of 85.0500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_37000.ckpt yields a beam decoding accuracy of 84.9000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_37500.ckpt yields a beam decoding accuracy of 86.2000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_37500.ckpt yields a beam decoding accuracy of 86.2500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_38000.ckpt yields a beam decoding accuracy of 85.4000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_38000.ckpt yields a beam decoding accuracy of 85.4000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_38500.ckpt yields a beam decoding accuracy of 87.0500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_38500.ckpt yields a beam decoding accuracy of 87.0500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_39000.ckpt yields a beam decoding accuracy of 86.2500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_39000.ckpt yields a beam decoding accuracy of 86.2500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_39500.ckpt yields a beam decoding accuracy of 84.4500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_39500.ckpt yields a beam decoding accuracy of 84.4500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_40000.ckpt yields a beam decoding accuracy of 78.9500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_40000.ckpt yields a beam decoding accuracy of 78.9000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_40500.ckpt yields a beam decoding accuracy of 83.9500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_40500.ckpt yields a beam decoding accuracy of 84.0000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_41000.ckpt yields a beam decoding accuracy of 87.5500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_41000.ckpt yields a beam decoding accuracy of 87.4500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_41500.ckpt yields a beam decoding accuracy of 86.9000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_41500.ckpt yields a beam decoding accuracy of 86.9000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_42000.ckpt yields a beam decoding accuracy of 87.9000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_42000.ckpt yields a beam decoding accuracy of 87.9000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_42500.ckpt yields a beam decoding accuracy of 87.8500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_42500.ckpt yields a beam decoding accuracy of 87.8500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_43000.ckpt yields a beam decoding accuracy of 87.2000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_43000.ckpt yields a beam decoding accuracy of 87.2000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_43500.ckpt yields a beam decoding accuracy of 84.6000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_43500.ckpt yields a beam decoding accuracy of 84.6000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_44000.ckpt yields a beam decoding accuracy of 84.5500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_44000.ckpt yields a beam decoding accuracy of 84.5500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_44500.ckpt yields a beam decoding accuracy of 86.6500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_44500.ckpt yields a beam decoding accuracy of 86.6500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_45000.ckpt yields a beam decoding accuracy of 85.6000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_45000.ckpt yields a beam decoding accuracy of 85.5500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_45500.ckpt yields a beam decoding accuracy of 88.5000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_45500.ckpt yields a beam decoding accuracy of 88.4500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_46000.ckpt yields a beam decoding accuracy of 87.0000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_46000.ckpt yields a beam decoding accuracy of 87.0500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_46500.ckpt yields a beam decoding accuracy of 85.8000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_46500.ckpt yields a beam decoding accuracy of 85.7500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_47000.ckpt yields a beam decoding accuracy of 86.6500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_47000.ckpt yields a beam decoding accuracy of 86.6000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_47500.ckpt yields a beam decoding accuracy of 85.7000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_47500.ckpt yields a beam decoding accuracy of 85.7000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_48000.ckpt yields a beam decoding accuracy of 87.6000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_48000.ckpt yields a beam decoding accuracy of 87.6000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_48500.ckpt yields a beam decoding accuracy of 88.1000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_48500.ckpt yields a beam decoding accuracy of 88.1000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_49000.ckpt yields a beam decoding accuracy of 87.5000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_49000.ckpt yields a beam decoding accuracy of 87.5500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_49500.ckpt yields a beam decoding accuracy of 88.7000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_49500.ckpt yields a beam decoding accuracy of 88.7000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_50000.ckpt yields a beam decoding accuracy of 87.4500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_50000.ckpt yields a beam decoding accuracy of 87.4000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_50500.ckpt yields a beam decoding accuracy of 88.1000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_50500.ckpt yields a beam decoding accuracy of 88.0500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_51000.ckpt yields a beam decoding accuracy of 88.3500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_51000.ckpt yields a beam decoding accuracy of 88.4000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_51500.ckpt yields a beam decoding accuracy of 87.4500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_51500.ckpt yields a beam decoding accuracy of 87.4500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_52000.ckpt yields a beam decoding accuracy of 85.8000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_52000.ckpt yields a beam decoding accuracy of 85.7500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_52500.ckpt yields a beam decoding accuracy of 88.4000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_52500.ckpt yields a beam decoding accuracy of 88.3500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_53000.ckpt yields a beam decoding accuracy of 86.1500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_53000.ckpt yields a beam decoding accuracy of 86.1000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_53500.ckpt yields a beam decoding accuracy of 88.9000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_53500.ckpt yields a beam decoding accuracy of 88.9000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_54000.ckpt yields a beam decoding accuracy of 88.4500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_54000.ckpt yields a beam decoding accuracy of 88.4000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_54500.ckpt yields a beam decoding accuracy of 86.4000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_54500.ckpt yields a beam decoding accuracy of 86.3500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_55000.ckpt yields a beam decoding accuracy of 87.9500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_55000.ckpt yields a beam decoding accuracy of 87.9000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_55500.ckpt yields a beam decoding accuracy of 87.4000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_55500.ckpt yields a beam decoding accuracy of 87.4000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_56000.ckpt yields a beam decoding accuracy of 86.2500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_56000.ckpt yields a beam decoding accuracy of 86.2000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_56500.ckpt yields a beam decoding accuracy of 87.7500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_56500.ckpt yields a beam decoding accuracy of 87.7500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_57000.ckpt yields a beam decoding accuracy of 86.9000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_57000.ckpt yields a beam decoding accuracy of 86.9500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_57500.ckpt yields a beam decoding accuracy of 86.4000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_57500.ckpt yields a beam decoding accuracy of 86.3500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_58000.ckpt yields a beam decoding accuracy of 89.3500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_58000.ckpt yields a beam decoding accuracy of 89.3500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_58500.ckpt yields a beam decoding accuracy of 89.5000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_58500.ckpt yields a beam decoding accuracy of 89.5000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_59000.ckpt yields a beam decoding accuracy of 88.4500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_59000.ckpt yields a beam decoding accuracy of 88.4000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_59500.ckpt yields a beam decoding accuracy of 88.2000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_59500.ckpt yields a beam decoding accuracy of 88.2000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_60000.ckpt yields a beam decoding accuracy of 88.5500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_60000.ckpt yields a beam decoding accuracy of 88.5500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_60500.ckpt yields a beam decoding accuracy of 86.4000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_60500.ckpt yields a beam decoding accuracy of 86.4000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_61000.ckpt yields a beam decoding accuracy of 85.8500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_61000.ckpt yields a beam decoding accuracy of 85.7000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_61500.ckpt yields a beam decoding accuracy of 88.6000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_61500.ckpt yields a beam decoding accuracy of 88.5500%
+ 
+Evaluation of model D:/LP weights/weights.ckpt_iteration_62000.ckpt yields a beam decoding accuracy of 86.9000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_62000.ckpt yields a beam decoding accuracy of 86.8500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_62500.ckpt yields a beam decoding accuracy of 89.3500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_62500.ckpt yields a beam decoding accuracy of 89.3500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_63000.ckpt yields a beam decoding accuracy of 88.7500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_63000.ckpt yields a beam decoding accuracy of 88.7000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_63500.ckpt yields a beam decoding accuracy of 86.8000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_63500.ckpt yields a beam decoding accuracy of 86.7500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_64000.ckpt yields a beam decoding accuracy of 87.7500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_64000.ckpt yields a beam decoding accuracy of 87.7500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_64500.ckpt yields a beam decoding accuracy of 85.3000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_64500.ckpt yields a beam decoding accuracy of 85.3000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_65000.ckpt yields a beam decoding accuracy of 84.2000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_65000.ckpt yields a beam decoding accuracy of 84.2000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_65500.ckpt yields a beam decoding accuracy of 87.6000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_65500.ckpt yields a beam decoding accuracy of 87.5500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_66000.ckpt yields a beam decoding accuracy of 86.2000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_66000.ckpt yields a beam decoding accuracy of 86.2500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_66500.ckpt yields a beam decoding accuracy of 88.7500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_66500.ckpt yields a beam decoding accuracy of 88.7500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_67000.ckpt yields a beam decoding accuracy of 89.6500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_67000.ckpt yields a beam decoding accuracy of 89.6500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_67500.ckpt yields a beam decoding accuracy of 88.3000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_67500.ckpt yields a beam decoding accuracy of 88.3000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_68000.ckpt yields a beam decoding accuracy of 87.8500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_68000.ckpt yields a beam decoding accuracy of 87.8500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_68500.ckpt yields a beam decoding accuracy of 89.0500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_68500.ckpt yields a beam decoding accuracy of 89.0500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_69000.ckpt yields a beam decoding accuracy of 87.5000%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_69000.ckpt yields a beam decoding accuracy of 87.5000%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_69500.ckpt yields a beam decoding accuracy of 86.4500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_69500.ckpt yields a beam decoding accuracy of 86.4500%
+
+Evaluation of model D:/LP weights/weights.ckpt_iteration_70000.ckpt yields a beam decoding accuracy of 87.8500%
+Evaluation of model D:/LP weights/weights.ckpt_iteration_70000.ckpt yields a beam decoding accuracy of 87.8500%
+
