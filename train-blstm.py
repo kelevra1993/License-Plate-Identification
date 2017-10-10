@@ -17,11 +17,11 @@ os.environ['TF_ENABLE_WINOGRAD_NONFUSED'] = '1'
 sess = tf.InteractiveSession()
 
 #Weight storage
-model_path="D:/LP weights/weights.ckpt"
-weight_saver=500
+model_path="./weights/weights"
+weight_saver=5000
 
 #Tensorboard information
-tensorboard_path="./tensorboard/Fr-train"
+tensorboard_path="./tensorboard"
 
 #Network parameters
 learning_rate=1e-4
@@ -34,7 +34,7 @@ num_classes=38
 input_feature_length=150
 
 #Size of Input Batch
-input_batch_size=20
+input_batch_size=2
 
 #Number of LSTM BLOCK, be careful tensorflow loosely uses the term LSTMCELL to define an LSTMBLOCK !!! 
 #Litterature diffenciates these two concepts
@@ -42,7 +42,7 @@ num_hidden_units=600
 
 #Data files....
 '''WE WILL NEED ONE FOR A VALIDATION SET WILL COME LATER IN THE FUTURE'''
-tfrecords_file="D:/LP data/train.tfrecords"
+tfrecords_file="./data/train.tfrecords"
 
 #Number of iterations that we will run 
 num_iterations=5000000
@@ -178,8 +178,6 @@ sess.run(tf.local_variables_initializer())
 
 #MODEL SAVING DEFINITION + FILE LIMIT
 saver=tf.train.Saver(max_to_keep=100000)
-
-print("\n"*5)
 print("----------Tensorflow has been set----------")
 print("\n"*5)
 
