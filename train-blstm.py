@@ -38,7 +38,7 @@ input_batch_size=2
 
 #Number of LSTM BLOCK, be careful tensorflow loosely uses the term LSTMCELL to define an LSTMBLOCK !!! 
 #Litterature diffenciates these two concepts
-num_hidden_units=600
+num_hidden_units=1000
 
 #Data files....
 '''WE WILL NEED ONE FOR A VALIDATION SET WILL COME LATER IN THE FUTURE'''
@@ -98,8 +98,8 @@ with tf.name_scope('Bidirectional-Layer'):
 	#FORWARD AND BACKWARD PASS DEFINITION
 	
 	#Faster LSTM cells
-	foward_pass_cells=[tf.contrib.rnn.LSTMCell(num_units=num_hidden_units,use_peepholes=True) for i in range(4)]
-	backward_pass_cells=[tf.contrib.rnn.LSTMCell(num_units=num_hidden_units,use_peepholes=True) for i in range(4)]
+	foward_pass_cells=[tf.contrib.rnn.LSTMCell(num_units=num_hidden_units,use_peepholes=True) for i in range(2)]
+	backward_pass_cells=[tf.contrib.rnn.LSTMCell(num_units=num_hidden_units,use_peepholes=True) for i in range(2)]
 	
 	#Stacking of LSTM Layers
 	outputs, output_state_fw, output_state_bw=tf.contrib.rnn.stack_bidirectional_dynamic_rnn(
@@ -140,15 +140,15 @@ with tf.name_scope('DECODER'):
 	#TRANSFORMATION OF SPARSE OUTPUTS FROM OUR DECODERS
 	decoded_dense=tf.sparse_tensor_to_dense(decoded[0])
 	decoded_beam_dense=tf.sparse_tensor_to_dense(decoded_beam[0])
+with tf.name_scope('Model_Evaluation'):
+	sparse_label=tf.cast(sparse_label,dtype=tf.int64)
 
-sparse_label=tf.cast(sparse_label,dtype=tf.int64)
+	#MODEL EVALUATION
+	acc=tf.edit_distance(decoded[0],sparse_label,normalize=False)
+	acc=tf.reduce_mean(acc)
 
-#MODEL EVALUATION 
-acc=tf.edit_distance(decoded[0],sparse_label,normalize=False)
-acc=tf.reduce_mean(acc)
-
-acc_beam=tf.edit_distance(decoded_beam[0],sparse_label,normalize=False)
-acc_beam=tf.reduce_mean(acc_beam)
+	acc_beam=tf.edit_distance(decoded_beam[0],sparse_label,normalize=False)
+	acc_beam=tf.reduce_mean(acc_beam)
 
 with tf.name_scope('Gradient-computation'):
 	train_step=tf.train.AdamOptimizer(learning_rate,momentum).minimize(cost)
